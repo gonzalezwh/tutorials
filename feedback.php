@@ -9,11 +9,11 @@ echo "<form method='POST' name='feedback.php' action='message.php'>";
 echo "<H2>Email Program</H2>";
 echo "<TABLE>";
 echo "<TR><TH>Name</TH><TD>";
-echo "<Input type='text' name='name'>";
+echo "<Input type='text' name='name' value='".$name."'>";
 echo "</TD></TR><TR><TH>E-mail</TH>";
-echo "<TD><input tyoe='text' name='email'></TD>";
+echo "<TD><input type='text' name='email' value='".$email."'></TD>";
 echo "</TR><TH>Enter text</TH><TD>";
-echo "<textarea name='text'></textarea>'";
+echo "<textarea name='text' value='".$text."'></textarea>'";
 echo "<input type='submit' value='Send Mail'>";
 echo "</form>";
 ?>
