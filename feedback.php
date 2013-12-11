@@ -1,13 +1,16 @@
 <?php
+$mname="";
+$memail="";
+$mtext="";
+$error="";
+$name="";
+$email="";
+$text="";
 if(!empty($_POST)){
-    $error=0;
     $name=$_POST['name'];
     $email=$_POST['email'];
     $text=$_POST['text'];
-    $mname="";
-    $memail="";
-    $mtext="";
-    if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+   if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
          $error=1; $memail='Email is not valid';
     }
 
@@ -36,23 +39,23 @@ if(!empty($_POST)){
 <form method='POST'>
     <H2>Email Program</H2>
     <?php if($error): ?>
-        <p>There was an error in your form. Please correct it.</p>
+        <H2>There was an error in your form. Please correct it.</H2>
     <?php endif; ?>
     <TABLE>
         <TR>
             <TH>Name</TH>
             <TD><Input type='text' name='name' value="<?php echo htmlspecialchars($name) ?>"></TD>
-            <TD><h1><?php echo $mname ?></h1></TD>
+            <TD><h3><?php echo $mname ?></h3></TD>
          </TR>
         <TR>
             <TH>E-mail</TH>
             <TD><input type='text' name='email' value="<?php echo htmlspecialchars($email) ?>"></TD>
-            <TD><h1><?php echo $memail ?></h1></TD>
+            <TD><h3><?php echo $memail ?></h3></TD>
         </TR>
         <tr>
             <TH>Enter text</TH>
             <TD><textarea name='text'><?php echo htmlspecialchars($text) ?></textarea></td>
-            <TD><h1><?php echo $mtext ?></h1></TD>
+            <TD><h3><?php echo $mtext ?></h3></TD>
         </tr>
     </table>
     <input type='submit' value='Send Mail'>
