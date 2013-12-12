@@ -37,7 +37,7 @@ unset ($_SESSION['user']);
     <?php if($error): ?>
         <H2>There was an error in your report. Please correct it.</H2>
     <?php endif; ?>
-    <TABLE BORDERS=1>
+    <TABLE BORDER=1>
         <TR>
             <TH>Id</TH>
             <TH>Name</TH>
