@@ -1,4 +1,6 @@
-<? session_start() ?>
+<? session_start();
+unset ($_SESSION['user']);
+?>
 <html>
 <head>
 <body>
