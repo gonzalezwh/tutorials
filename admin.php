@@ -5,17 +5,8 @@ if (!isset($_SESSION['user'])) {
     die('User name does not have access! ');
 }
 $username=$_SESSION["user"];
-$username=str_replace("*","",$username);
-$username=str_replace("(","",$username);
-$username=str_replace(")","",$username);
-$username=str_replace(chr(92),"",$username);
-$username=str_replace("\n","",$username);
 
-$connection = ldap_connect('ldap.oit.pdx.edu');
-
-$search = ldap_search($connection, 'dc=pdx,dc=edu', '(& (memberUid='.$username.') (objectclass=posixGroup))');
-$results = ldap_get_entries($connection, $search);
-if(!empty($username) && $results['count']==1){
+if(!empty($username)){
     if (!$conn=mysqli_connect("tutorials.local.10.0.0.10.nip.io",$username))
     {
         echo "failed to connect to mysql ".mysql_connect_error();
@@ -26,7 +17,7 @@ if(!empty($username) && $results['count']==1){
         exit;
     }
 
-    if (empty($username) && ($results['count']!=1)) {$error=1; $mname = 'Please enter the name!';}
+    if (empty($username)) {$error=1; $mname = 'Please enter the name!';}
         if ($error==0) {  
             $sql="select id, to_whom, subject, textmsg, headers from email_log order by id";
             $result=mysqli_query($conn,$sql);
@@ -42,7 +33,7 @@ if(!empty($username) && $results['count']==1){
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript"> 
 $(document).ready(function(){
-    $(".button").click(function(){
+    $(".bdelete").click(function(){
     var del_id = $(this).attr('id');
     var info = 'id=' + del_id;
     if(confirm("Do you realy want to delete the row?"))
@@ -58,7 +49,12 @@ $(document).ready(function(){
     });
     }
     });
-})
+});
+</script>
+<script type="text/javascript"> 
+    function openWin(id) {
+    var win = window.open('/updateRowAdmin.php?id='+id,'_top');
+    } 
 </script>
 </head>
 <body>
@@ -75,6 +71,7 @@ $(document).ready(function(){
             <TH>Subject</TH>
             <TH>Headers</TH>
             <TH></TH>
+            <TH></TH>
         </TR>
 <?php while($row = mysqli_fetch_array($result)) {
     echo "<TR>";
@@ -83,7 +80,8 @@ $(document).ready(function(){
     echo "<TD>".htmlspecialchars($row['subject'])."</TD>";
     echo "<TD>".htmlspecialchars($row['textmsg'])."</TD>";
     echo "<TD>".htmlspecialchars($row['headers'])."</TD>";
-    echo "<TD><button class=button id=".htmlspecialchars($row['id']).">delete</button></TD>";
+    echo "<TD><button class=bdelete id=".htmlspecialchars($row['id']).">delete</button></TD>";
+    echo "<TD><button class=bupdate onclick=openWin('".htmlspecialchars($row['id'])."')>update</button></TD>";
     echo "</TR>";
 } ?>
     </table>
