@@ -1,21 +1,6 @@
 <?php
-session_start();
+include('login.php');
 $error=0;
-if (!isset($_SESSION['user'])) {
-    die('User name does not have access! ');
-}
-$username=$_SESSION["user"];
-
-if(!empty($username)){
-    if (!$conn=mysqli_connect("tutorials.local.10.0.0.10.nip.io",$username))
-    {
-        echo "failed to connect to mysql ".mysql_connect_error();
-    }
-
-    if (!mysqli_select_db($conn,"tutorials")){
-        echo "Could not select db!";
-        exit;
-    }
 
     if (empty($username)) {$error=1; $mname = 'Please enter the name!';}
         if ($error==0) {  
@@ -23,10 +8,9 @@ if(!empty($username)){
             $result=mysqli_query($conn,$sql);
 
             if (!mysqli_close($conn)){
-                die('Error: '.mysql_error($conn));
+                die('Error: '.mysqli_error($conn));
             }
         }
-}
 ?>
 <html>
 <head>
@@ -51,19 +35,38 @@ $(document).ready(function(){
     });
 });
 </script>
-<script type="text/javascript"> 
-    function openWin(id) {
+<script type="text/javascript">
+    function openWinUpdate(id) {
     var win = window.open('/updateRowAdmin.php?id='+id,'_top');
-    } 
+    }
+    function openWinInsert() {
+    var win = window.open('/addRowAdmin.php','_top');
+    }  
 </script>
+<style>
+.table  tbody tr:nth-child(odd) {
+  background-color: #DDDDEE;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #CCCCCC;
+}
+
+.table tbody tr:hover {
+  background-color: white;
+}
+.table th{
+  background-color: gray;
+}
+</style>
 </head>
 <body>
     <H2>Email Report</H2>
-    <H2><?php echo "Usuario: ".$username ?></H2>
+    <H2><?php echo "User: ".$username ?></H2>
     <?php if($error): ?>
         <H2>There was an error in your report. Please correct it.</H2>
     <?php endif; ?>
-    <TABLE BORDER=1 id=logs>
+    <TABLE BORDER=1 class=table  id=logs>
         <TR>
             <TH>Id</TH>
             <TH>Name</TH>
@@ -72,18 +75,25 @@ $(document).ready(function(){
             <TH>Headers</TH>
             <TH></TH>
             <TH></TH>
+            <TH></TH>
         </TR>
-<?php while($row = mysqli_fetch_array($result)) {
-    echo "<TR>";
-    echo "<TD>".htmlspecialchars($row['id'])."</TD>";
-    echo "<TD>".htmlspecialchars($row['to_whom'])."</TD>";
-    echo "<TD>".htmlspecialchars($row['subject'])."</TD>";
+        <TBODY>
+<?php while($row = mysqli_fetch_array($result)): ?>
+    <TR>";
+    <TD><?php echo htmlspecialchars($row['id']) ?></TD>
+    <TD>".htmlspecialchars($row['to_whom'])."</TD>";
+    <TD>".htmlspecialchars($row['subject'])."</TD>";
     echo "<TD>".htmlspecialchars($row['textmsg'])."</TD>";
     echo "<TD>".htmlspecialchars($row['headers'])."</TD>";
     echo "<TD><button class=bdelete id=".htmlspecialchars($row['id']).">delete</button></TD>";
-    echo "<TD><button class=bupdate onclick=openWin('".htmlspecialchars($row['id'])."')>update</button></TD>";
+    echo "<TD><button class=bupdate onclick=openWinUpdate('".htmlspecialchars($row['id'])."')>update</button></TD>";
     echo "</TR>";
-} ?>
+   
+<?php endwhile; ?>
+echo "<p></p><button class=binsert onclick='openWinInsert()'>insert</button></p>";
+?>
+    </TBODY>
     </table>
+    
 </body>
 </html>

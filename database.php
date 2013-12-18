@@ -1,5 +1,5 @@
 <?php
-
+include('login.php');
 $mtext="";
 $memail="";
 $mname="";
@@ -8,15 +8,7 @@ $text="";
 $email="";
 $error="";
 if(!empty($_POST)){
-    if (!$conn=mysql_connect("tutorials.local.10.0.0.10.nip.io","whg"))
-    {
-        echo "Failed to connect to mysql ".mysql_connect_error();
-    }
 
-    if (!mysql_select_db("tutorials",$conn)){
-        echo "Could not select db!";
-        exit;
-    }
     $error=0;
     $name=$_POST['name'];
     $email=$_POST['email'];
