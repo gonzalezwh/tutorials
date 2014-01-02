@@ -7,7 +7,6 @@ $headers="";
 $error="";
 if(!empty($_SESSION['user'])){
     $username=$_SESSION['user'];
-
     if (!isset($_POST['pk'])) {    
         $pk=$_GET['id']; 
         $pk_safe= mysql_real_escape_string($pk);
@@ -21,9 +20,8 @@ if(!empty($_SESSION['user'])){
         }
         unset($_GET['id']);
     }
-
     $error=0;
-    if (isset($_POST['pk'])) {
+    if (isset($_POST['pk'])){
         $pk=$_POST['pk'];
         $name=$_POST['name'];
         $headers=$_POST['headers'];
@@ -54,26 +52,26 @@ function openWin() {
 </script>
 <body>
 <form method='POST'>
-<H2>Update Email</H2>
-<?php echo "<H3>User :".$_SESSION['user']."</H3>" ?>
+<h2>Update Email</h2>
+<?php echo "<h3>User :".$_SESSION['user']."</h3>" ?>
     <?php if($error): ?>
-        <H2>There was an error in your form. Please correct it.</H2>
+        <h2>There was an error in your form. Please correct it.</h2>
     <?php endif; ?>
-    <TABLE bgcolor='#CCCCCC'>  
-        <TR>
-            <TD><Input type='hidden' name='pk' value="<?php echo $pk ?>"></TD>
-         </TR>
-        <TR>
-            <TH>Name</TH>
-            <TD><Input type='text' name='name' value="<?php echo htmlspecialchars($name) ?>"></TD>
-         </TR>
-        <TR>
-            <TH>E-mail</TH>
-            <TD><input type='text' name='headers' value="<?php echo htmlspecialchars($headers) ?>"></TD>
-        </TR>
+    <table bgcolor='#CCCCCC'>  
         <tr>
-            <TH>Enter text</TH>
-            <TD><textarea name='text'><?php echo htmlspecialchars($text) ?></textarea></td>
+            <td><Input type='hidden' name='pk' value="<?php echo $pk ?>"></td>
+         </tr>
+        <tr>
+            <th>Name</th>
+            <td><Input type='text' name='name' value="<?php echo htmlspecialchars($name) ?>"></td>
+         </tr>
+        <tr>
+            <th>E-mail</th>
+            <td><input type='text' name='headers' value="<?php echo htmlspecialchars($headers) ?>"></td>
+        </tr>
+        <tr>
+            <th>Enter text</th>
+            <td><textarea name='text'><?php echo htmlspecialchars($text) ?></textarea></td>
         </tr>
     </table>
     <input type='submit' value='Update Mail'>

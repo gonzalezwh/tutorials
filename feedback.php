@@ -10,7 +10,7 @@ if(!empty($_POST)){
     $name=$_POST['name'];
     $email=$_POST['email'];
     $text=$_POST['text'];
-   if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
          $error=1; $memail='Email is not valid';
     }
 
@@ -24,7 +24,6 @@ if(!empty($_POST)){
         $to = "whg@pdx.edu";
         $headers = "From: whg@pdx.edu \r\n";
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        
         $headers .= "Reply-To: $email  \r\n";
         mail($to,"Student message",$text,$headers);
         header("HTTP/1.1 301 Moved Permanently");
@@ -41,21 +40,21 @@ if(!empty($_POST)){
     <?php if($error): ?>
         <H2>There was an error in your form. Please correct it.</H2>
     <?php endif; ?>
-    <TABLE>
-        <TR>
-            <TH>Name</TH>
-            <TD><Input type='text' name='name' value="<?php echo htmlspecialchars($name) ?>"></TD>
-            <TD><h3><?php echo $mname ?></h3></TD>
-         </TR>
-        <TR>
-            <TH>E-mail</TH>
-            <TD><input type='text' name='email' value="<?php echo htmlspecialchars($email) ?>"></TD>
-            <TD><h3><?php echo $memail ?></h3></TD>
-        </TR>
+    <table>
         <tr>
-            <TH>Enter text</TH>
-            <TD><textarea name='text'><?php echo htmlspecialchars($text) ?></textarea></td>
-            <TD><h3><?php echo $mtext ?></h3></TD>
+            <th>Name</th>
+            <td><Input type='text' name='name' value="<?php echo htmlspecialchars($name) ?>"></td>
+            <td><h3><?php echo $mname ?></h3></td>
+         </tr>
+        <tr>
+            <th>E-mail</th>
+            <td><input type='text' name='email' value="<?php echo htmlspecialchars($email) ?>"></td>
+            <td><h3><?php echo $memail ?></h3></td>
+        </tr>
+        <tr>
+            <th>Enter text</th>
+            <td><textarea name='text'><?php echo htmlspecialchars($text) ?></textarea></td>
+            <td><h3><?php echo $mtext ?></h3></td>
         </tr>
     </table>
     <input type='submit' value='Send Mail'>

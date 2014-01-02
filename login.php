@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if (!$conn=mysqli_connect("tutorials.local.10.0.0.10.nip.io",'whg'))
-{
+if (!$conn=mysqli_connect("tutorials.local.10.0.0.10.nip.io",'whg')){
     echo "failed to connect to mysql ".mysqli_connect_error();
 }
 if (!mysqli_select_db($conn,"tutorials")){
@@ -33,10 +32,7 @@ if (!isset($_SESSION['user'])) {
     if ($results['count']!=1){
             header("Location: http://10.0.0.10/home.php");
     }
-           
     header("Location: " . $_GET['next']);
 }
-
 $username = $_SESSION['user'];
-
 ?>
